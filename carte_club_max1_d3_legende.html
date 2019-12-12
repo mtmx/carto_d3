@@ -317,6 +317,8 @@
           .attr('width', 6.5)
           .attr('height', 6.5)
           .attr("transform", function(d,i) {  "translate(10," + (i * 20) +")" })
+           .attr("xlink:href", function(d) { return "./logos_clubs/" + d + ".png"})
+          // .attr("xlink:href",  function(d) { return  d.initiales_club } )
           .on("mouseover", highlight)
           .on("mouseleave", noHighlight)
           
