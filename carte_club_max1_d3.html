@@ -120,13 +120,13 @@ Promise.all([deps, pts_grille])
             "<br/>" + 
             // "<img src='http://upload.wikimedia.org/wikipedia/commons/b/b3/Mali_Tombouctou.png'>" +                        
              d.NOM_COMM )
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
+            .style("left", (d3.event.pageX + "px"))
+            .style("top", (d3.event.pageY + "px"))
   }
   var moveTooltip = function(d) {
     tooltip
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
+            .style("left", (d3.event.pageX + "px"))
+            .style("top", (d3.event.pageY + "px"))
   }
   var hideTooltip = function(d) {
     tooltip
