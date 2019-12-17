@@ -280,7 +280,7 @@
           .attr('height', 15)
           .attr("transform", function(d,i) {  "translate(10," + (i * 20) +")" })
           .attr("xlink:href", function(d) { return "./data_sorties/logos_clubs/" + d + ".png"})
-          // .attr("xlink:href",  function(d) { return  d.initiales_club } )
+          // .attr("xlink:href", function(d){ return d.logo_png} )
           .on("mouseover", highlight)
           .on("mouseleave", noHighlight)
           
