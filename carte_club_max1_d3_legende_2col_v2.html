@@ -3,9 +3,7 @@
     <head>
     <meta charset="utf-8">
       <title>Carte avec légende 2</title>
-            <!-- <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script> -->
-            <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.10.0/d3.min.js"></script> -->
-            <script src="https://unpkg.com/d3@5.6.0/dist/d3.min.js"></script>
+      <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script> 
         <!-- <link rel="stylesheet" type="text/css" href="map.css"> -->
           <style>
           text {
@@ -50,8 +48,8 @@
         
         
         // load data  
-        var deps = d3.json("data/geo_departements.geojson");
-        var pts_grille = d3.csv("data/grid_club_max1.csv");
+        var deps = d3.json("data_sorties/geo_departements.geojson");
+        var pts_grille = d3.csv("data_sorties/grid_club_max1.csv");
         
         
         
