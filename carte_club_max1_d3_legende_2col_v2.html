@@ -269,6 +269,7 @@
           
           // legende sur deux colonnes  ? /
             
+            // 1ère colonne de logos
             svg.selectAll("myrect")
           .data(allgroups_1)
           .enter()
@@ -278,12 +279,12 @@
           .attr('width', 15)
           .attr('height', 15)
           .attr("transform", function(d,i) {  "translate(10," + (i * 20) +")" })
-          .attr("xlink:href", function(d) { return "./logos_clubs/" + d + ".png"})
+          .attr("xlink:href", function(d) { return "./data_sorties/logos_clubs/" + d + ".png"})
           // .attr("xlink:href",  function(d) { return  d.initiales_club } )
           .on("mouseover", highlight)
           .on("mouseleave", noHighlight)
           
-          
+          // 2ème colonne de logos
           svg.selectAll("myrect")
           .data(allgroups_2)
           .enter()
@@ -293,7 +294,7 @@
           .attr('width', 15)
           .attr('height', 15)
           .attr("transform", function(d,i) {  "translate(10," + (i * 20) +")" })
-          .attr("xlink:href", function(d) { return "./logos_clubs/" + d + ".png"})
+          .attr("xlink:href", function(d) { return "./data_sorties/logos_clubs/" + d + ".png"})
           // .attr("xlink:href",  function(d) { return  d.initiales_club } )
           .on("mouseover", highlight)
           .on("mouseleave", noHighlight)
