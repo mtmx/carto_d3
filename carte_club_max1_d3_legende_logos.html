@@ -2,7 +2,7 @@
  <html lang="en">
     <head>
     <meta charset="utf-8">
-    <title>Carte avec légende 2</title>
+    <title>Carte avec légende</title>
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script> 
     <style>
         text {
@@ -22,9 +22,9 @@
           stroke-width: 0.4px;
         }
     </style>
-    </head>
-    <body>
-    <div id="container" class="svg-container"></div>
+  </head>
+<body>
+  <div id="container" class="svg-container"></div>
     <script >
         var w = 500;
         var h = 450;
@@ -125,7 +125,7 @@
         var hideTooltip = function(d) {
             tooltip
             .transition()
-            .duration(200)
+            .duration(1500)
             .style("opacity", 0)
           }
           
@@ -299,6 +299,6 @@
           .on("mouseleave", noHighlight)
           
         }); 
-        </script>
-      </body>
-    </html>
+      </script>
+  </body>
+</html>
