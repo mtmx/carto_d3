@@ -2,11 +2,10 @@
  <html lang="en">
     <head>
     <meta charset="utf-8">
-      <title>Carte avec légende 2</title>
-      <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script> 
-        <!-- <link rel="stylesheet" type="text/css" href="map.css"> -->
-          <style>
-          text {
+    <title>Carte avec légende 2</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script> 
+    <style>
+        text {
             font-family: 'Roboto', sans-serif;
           }
         .dep {
@@ -22,14 +21,13 @@
           stroke: black;
           stroke-width: 0.4px;
         }
-        </style>
-          </head>
-          <body>
-          <div id="container" class="svg-container"></div>
-          <script >
-          var w = 500;
+    </style>
+    </head>
+    <body>
+    <div id="container" class="svg-container"></div>
+    <script >
+        var w = 500;
         var h = 450;
-        
         
         var svg = d3.select("div#container")
         .append("svg")
@@ -51,27 +49,25 @@
         var deps = d3.json("data_sorties/geo_departements.geojson");
         var pts_grille = d3.csv("data_sorties/grid_club_max1.csv");
         
-        
-        
         Promise.all([deps, pts_grille])
         .then(function(values){    
           
-          // ---------------------------//
-            //       AXIS  AND SCALE      //
-            // ---------------------------//
+        // ---------------------------//
+        //       AXIS  AND SCALE      //
+        // ---------------------------//
             
-            // Add X axis
-          var x = d3.scaleLinear()
+        // Add X axis
+        var x = d3.scaleLinear()
           .domain([-6, 11])
           .range([ 0, w ]);
           
           // Add Y axis
-          var y = d3.scaleLinear()
+        var y = d3.scaleLinear()
           .domain([41, 52])
           .range([ h, 0]);
           
           // Add Y axis label:
-            svg.append("text")
+        svg.append("text")
           .attr("text-anchor", "end")
           .attr("x", 0)
           .attr("y", 20 )
@@ -80,32 +76,33 @@
           .attr("text-anchor", "start")
           
           // Add a scale for bubble size
-          var z = d3.scaleSqrt()
+        var z = d3.scaleSqrt()
           .domain([0, 25000])
           .range([ 1.5, 4]);
           
           // Add a scale for bubble color
-          var myColor = d3.scaleOrdinal()
-          .domain(["ACA","AJA","ASC","ASM","ASNL","ASSE","CF","CN","DFCO","EAG","ESTAC","FCGB","FCL","FCM","FCN","FCSM","GF","GFCA","HAC","LBC","LOSC","MHSC","NO","OGCN","OL","OM","PSG","RCL","RCSA","SB","SCB","SCO","SL","SMC","SR","SRFC","TFC","TOFC","USO","VAFC"])
-          .range(["#FF0800","#7CB9E8","#91A3B0","#FF0000","#FF3855","#00AD43","#D70A53","#2E5894","#FF0800","#000000","#966FD6","#0018A8","#FF8C00","#C71585","#FFEF00","#EEE600","#6495ED","#333399","#1E90FF","#F2003C","#ED2939","#ED872D","#CE2029","#B5651D","#AB274F","#89CFF0","#554177","#FFE302","#1F75FE","#FF4040","#1F75FE","#000000","#FF6103","#5D8AA8","#CB4154","#FF2800","#966FD6","#6CADDE",
+        var myColor = d3.scaleOrdinal()
+            .domain(["ACA","AJA","ASC","ASM","ASNL","ASSE","CF","CN","DFCO","EAG","ESTAC","FCGB","FCL","FCM","FCN","FCSM","GF","GFCA","HAC","LBC","LOSC","MHSC","NO","OGCN","OL","OM","PSG","RCL","RCSA","SB","SCB","SCO","SL","SMC","SR","SRFC","TFC","TOFC","USO","VAFC"])
+            .range(["#FF0800","#7CB9E8","#91A3B0","#FF0000","#FF3855","#00AD43","#D70A53","#2E5894","#FF0800","#000000","#966FD6","#0018A8","#FF8C00","#C71585","#FFEF00","#EEE600","#6495ED","#333399","#1E90FF","#F2003C","#ED2939","#ED872D","#CE2029","#B5651D","#AB274F","#89CFF0","#554177","#FFE302","#1F75FE","#FF4040","#1F75FE","#000000","#FF6103","#5D8AA8","#CB4154","#FF2800","#966FD6","#6CADDE",
                   "#FFD300","#FF2800"])
-          
-          // ---------------------------//
-            //      TOOLTIP               //
-            // ---------------------------//
+
+        // ---------------------------//
+        //      TOOLTIP               //
+        // ---------------------------//
             
-            // -1- Create a tooltip div that is hidden by default:
-            var tooltip = d3.select("div#container")
+        // -1- Create a tooltip div that is hidden by default:
+        var tooltip = d3.select("div#container")
           .append("div")
           .style("opacity", 0)
           .attr("class", "tooltip")
           .style("background-color", "white")
+          .style("border", "solid")
           .style("border-radius", "5px")
           .style("padding", "10px")
           .style("color", "black")
           
-          // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
-          var showTooltip = function(d) {
+        // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+        var showTooltip = function(d) {
             tooltip
             .transition()
             .duration(200)
@@ -119,12 +116,13 @@
             .style("top", (d3.event.pageY + "px"))
             .style("position", "absolute")
           }
-          var moveTooltip = function(d) {
+        var moveTooltip = function(d) {
             tooltip
             .style("left", (d3.event.pageX + "px"))
-            .style("top", (d3.event.pageY + "px"));
+            .style("top", (d3.event.pageY + "px"))
+            .style("stroke", "black");
           }
-          var hideTooltip = function(d) {
+        var hideTooltip = function(d) {
             tooltip
             .transition()
             .duration(200)
@@ -132,22 +130,22 @@
           }
           
           
-          // ---------------------------//
-            //       DEPARTEMENTS         //
-            // ---------------------------//
+        // ---------------------------//
+        //       DEPARTEMENTS         //
+        // ---------------------------//
             
-            svg.selectAll("path")
+        svg.selectAll("path")
           .data(values[0].features)
           .enter()
           .append("path")
           .attr("class","dep")
           .attr("d", path),
           
-          // ---------------------------//
-            //       POINTS GRILLE        //
-            // ---------------------------//
+        // ---------------------------//
+        //       POINTS GRILLE        //
+        // ---------------------------//
             
-            svg.append('g')
+        svg.append('g')
           .selectAll("dot")
           .data(values[1])
           .enter()
@@ -166,12 +164,12 @@
           .on("mousemove", moveTooltip )
           .on("mouseleave", hideTooltip )
           
-          // ---------------------------//
-            //       HIGHLIGHT GROUP      //
-            // ---------------------------//
+        // ---------------------------//
+        //       HIGHLIGHT GROUP      //
+        // ---------------------------//
             
-            // What to do when one group is hovered
-          var highlight = function(d){
+        // What to do when one group is hovered
+        var highlight = function(d){
             // reduce opacity of all groups
             d3.selectAll(".bubbles")
             .style("opacity", .05)
@@ -180,21 +178,21 @@
             .style("opacity", 1)
           }
           
-          // And when it is not hovered anymore
-          var noHighlight = function(d){
+        // And when it is not hovered anymore
+        var noHighlight = function(d){
             d3.selectAll(".bubbles")
             .style("opacity", 1)
           }
           
           
-          // ---------------------------//
-            //       LEGEND              //
-            // ---------------------------//
+        // ---------------------------//
+        //       LEGEND              //
+        // ---------------------------//
             
-            // Add legend: circles
-          var valuesToShow = [ 100, 20000]
-          var xCircle = 90
-          var xLabel = 40
+        // Add legend: circles
+        var valuesToShow = [ 100, 20000]
+        var xCircle = 90
+        var xLabel = 40
           // svg
           // .selectAll("legend")
           // .data(valuesToShow)
@@ -238,10 +236,10 @@
           // .text("Nombre de followers")
           // .attr("text-anchor", "middle")
           
-          // Add one dot in the legend for each name.
-          var size = 5
-          var allgroups_1 = ["ACA","AJA","ASC","ASM","ASNL","ASSE","CF","CN","DFCO","EAG","ESTAC","FCGB","FCL","FCM","FCN","FCSM","GF","GFCA","HAC","LBC"]
-          var allgroups_2 = ["LOSC","MHSC","NO","OGCN","OL","OM","PSG","RCL","RCS","SB","SCB","SCO","SL","SMC","SR","SRFC","TFC","TOFC","USO","VAFC"]
+        // Add one dot in the legend for each name.
+        var size = 5
+        var allgroups_1 = ["ACA","AJA","ASC","ASM","ASNL","ASSE","CF","CN","DFCO","EAG","ESTAC","FCGB","FCL","FCM","FCN","FCSM","GF","GFCA","HAC","LBC"]
+        var allgroups_2 = ["LOSC","MHSC","NO","OGCN","OL","OM","PSG","RCL","RCSA","SB","SCB","SCO","SL","SMC","SR","SRFC","TFC","TOFC","USO","VAFC"]
           
           // svg.selectAll("myrect")
           //   .data(allgroups)
@@ -269,8 +267,8 @@
           
           // legende sur deux colonnes  ? /
             
-            // 1ère colonne de logos
-            svg.selectAll("myrect")
+        // 1ère colonne de logos
+        svg.selectAll("myrect")
           .data(allgroups_1)
           .enter()
           .append("svg:image")
@@ -279,14 +277,14 @@
           .attr('width', 15)
           .attr('height', 15)
           .attr("transform", function(d,i) {  "translate(10," + (i * 20) +")" })
-          .attr("xlink:href", function(d) { return "./logos_clubs/" + d + ".png"})
+          .attr("xlink:href", function(d) { return "./data_sorties/logos_clubs/" + d + ".png"})
           // .attr("xlink:href", function(d){ return "./data_sorties/" + d.urllogopng} )
           // .attr("xlink:href", "./logos_clubs/ACA.png" )
           .on("mouseover", highlight)
           .on("mouseleave", noHighlight)
           
           // 2ème colonne de logos
-          svg.selectAll("myrect")
+        svg.selectAll("myrect")
           .data(allgroups_2)
           .enter()
           .append("svg:image")
