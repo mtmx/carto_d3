@@ -21,39 +21,23 @@
           stroke: black;
           stroke-width: 0.4px;
         }
-        button {
-	        padding: 1px 2px;
-        }
     </style>
   </head>
 <body>
   <div id="container" class="svg-container">
-        </div>
+  </div>
     <script >
         var w = 500;
         var h = 450;
-        
-       /* var zoom = d3.zoom().scaleExtent([1 / 4, 8]).on("zoom", zoomed); */
         
         var svg = d3.select("div#container")
         .append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .style("background-color","white")
-       /* .attr("viewBox", "0 0 " + w + " " + h)
-            .call(d3.zoom().on("zoom", function () {
-       svg.attr("transform", d3.event.transform)
-    }))
-        /* .call(zoom)
-            .on("wheel.zoom", null) */
-      /*  .call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})) */
+        .attr("viewBox", "0 0 " + w + " " + h)
         .classed("svg-content", true);
-     /*   
-        var zoom = d3.zoom()
-        .scaleExtent([1, 8])
-        .on("zoom", zoomed);
+
     
-    */
-          
         const projection = d3.geoConicConformal()
         .translate([w / 2, h / 2])
         .center([3.5, 46.2])
@@ -82,13 +66,14 @@
           .domain([41, 52])
           .range([ h, 0]);
           
+          
           // Add Y axis label:
         svg.append("text")
           .attr("text-anchor", "end")
           .attr("x", 0)
           .attr("y", 20 )
           // .text("Club majoritaire ")
-          .html("Club majoritaire " )
+          .html("Club majoritaire" )
           .attr("text-anchor", "start")
           
           // Add a scale for bubble size
@@ -101,6 +86,32 @@
             .domain(["ACA","AJA","ASC","ASM","ASNL","ASSE","CF","CN","DFCO","EAG","ESTAC","FCGB","FCL","FCM","FCN","FCSM","GF","GFCA","HAC","LBC","LOSC","MHSC","NO","OGCN","OL","OM","PSG","RCL","RCSA","SB","SCB","SCO","SL","SMC","SR","SRFC","TFC","TOFC","USO","VAFC"])
             .range(["#FF0800","#7CB9E8","#91A3B0","#FF0000","#FF3855","#00AD43","#D70A53","#2E5894","#FF0800","#000000","#966FD6","#0018A8","#FF8C00","#C71585","#FFEF00","#EEE600","#6495ED","#333399","#1E90FF","#F2003C","#ED2939","#ED872D","#CE2029","#B5651D","#AB274F","#89CFF0","#554177","#FFE302","#1F75FE","#FF4040","#1F75FE","#000000","#FF6103","#5D8AA8","#CB4154","#FF2800","#966FD6","#6CADDE", "#FFD300","#FF2800"])
 
+          // zoom
+          /*
+          var zoom = d3.zoom()
+            .scaleExtent([1, 8])
+           .on('zoom', function() {
+                svg.selectAll('path')
+                 .attr('transform', d3.event.transform);
+            });
+          
+
+            svg.call(zoom);
+            */
+            
+            var zoom = d3.zoom()
+              .scaleExtent([1, 8])
+              .on('zoom', function() {
+                  svg.selectAll('path')
+                   .attr('transform', d3.event.transform);
+                svg.selectAll("g")
+                   .attr('transform', d3.event.transform);
+  /*                  g.selectAll("text")
+                   .attr('transform', d3.event.transform); */
+                });
+
+            svg.call(zoom);
+            
         // ---------------------------//
         //      TOOLTIP               //
         // ---------------------------//
@@ -125,7 +136,7 @@
             .style("opacity", 1)
             .html(d.club_domicile_actuel + 
                     "<br/>" + 
-                    // "<img src='http://upload.wikimedia.org/wikipedia/commons/b/b3/Mali_Tombouctou.png'>" +                        
+                    // "<img src='http://upload.wikimedia.org/wikipedia/commons/b/b3/Mali_Tombouctou.png'>" +                       
                     d.NOM_COMM )
             .style("left", (d3.event.pageX + "px"))
             .style("top", (d3.event.pageY + "px"))
@@ -154,7 +165,7 @@
           .enter()
           .append("path")
           .attr("class","dep")
-          .attr("d", path),
+          .attr("d", path)
           
         // ---------------------------//
         //       POINTS GRILLE        //
@@ -179,6 +190,7 @@
           .on("mousemove", moveTooltip )
           .on("mouseleave", hideTooltip )
           
+        
         // ---------------------------//
         //       HIGHLIGHT GROUP      //
         // ---------------------------//
@@ -199,7 +211,7 @@
             .style("opacity", 1)
           }
           
-          
+
         // ---------------------------//
         //       LEGEND              //
         // ---------------------------//
